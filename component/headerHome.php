@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <header
+<header
       class="w-full p-2 flex justify-between items-center bg-white drop-shadow-md"
     >
       <nav class="">
@@ -98,7 +85,7 @@
                 >
                   <span class="mx-2">Your Card</span> 
                   <div class="shopping flex">
-                    <img src="./image/shopping.svg">
+                    <img src=".<?= $_SERVER['DOCUMENT_ROOT'].'/ass_php/component/image/shopping.svg'; ?>.">
                     <span class="quantity">0</span>
                 </div>
                 </a>
@@ -118,24 +105,3 @@
       </div>
       </div>
     </header>
-
-    <main>
-      <div class="list">
-          
-      </div>
-      <div class="card">
-        <h1>Card</h1>
-        <ul class="listCard">
-        </ul>
-        <div class="checkOut">
-            <div class="total">0</div>
-            <div class="closeShopping">Close</div>
-        </div>
-    </div>
-    </main>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="app.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
-  </body>
-</html>
