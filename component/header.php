@@ -4,6 +4,11 @@
 
     $username = strtoupper($session['username']);
 
+    if (isset($_POST['btnLogout'])) {
+        session_destroy();
+        header("Location: login.php");
+    }
+
     ?>
 
     <div>
@@ -53,7 +58,7 @@
                     </a>
                 </div>
                 <div class="w-full  bg-red-500 ">
-                    <form class="h-full" action="../index.php" method="post">
+                    <form class="h-full flex justify-center items-center text-white" action="" method="post">
                         <button name="btnLogout" class="font-bold">Log out</button>
                     </form>
                 </div>
