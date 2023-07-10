@@ -11,6 +11,7 @@ openShopping.addEventListener("click", () => {
 });
 closeShopping.addEventListener("click", () => {
   body.classList.remove("active");
+  window.location.replace("home.php");
 });
 
 let products = [
