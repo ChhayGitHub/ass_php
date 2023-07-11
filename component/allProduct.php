@@ -13,14 +13,14 @@ $sql = "select * from tbproducts";
 $result = $con->query($sql);
 
 //
-$sell = "select * from tbtmpsell";
+$sell = "select * from tbtempsell";
 $resultsell = $con->query($sell);
 //
-$count = "SELECT COUNT(name) as count FROM tbtmpsell";
+$count = "SELECT COUNT(proName) as count FROM tbtempsell";
 $resultcount = $con->query($count);
 $row = $resultcount->fetch_assoc();
 //
-$sum = "SELECT SUM(price) as total FROM tbtmpsell";
+$sum = "SELECT SUM(price) as total FROM tbtempsell";
 $resultsum = $con->query($sum);
 $rowsum = $resultsum->fetch_assoc();
 // print_r($rowsum);
@@ -36,7 +36,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/ass_php/component/headerHome.php');
 <body class="active">
     <div class="container">
 
-        <div class="list">
+        <div class="list grid grid-cols-4">
             <?php
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='item'>
@@ -53,7 +53,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/ass_php/component/headerHome.php');
     </div>
     <div class="card">
         <h1>Card</h1>
-        <ul class="listCard">
+        <ul class="listCard ">
             <?php
             while ($row = $resultsell->fetch_assoc()) {
                 echo "<li>
@@ -129,9 +129,9 @@ include($_SERVER['DOCUMENT_ROOT'].'/ass_php/component/headerHome.php');
             document.querySelector(".total").innerHTML = total;
         }
     </script>
-     <!-- <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.tailwindcss.com"></script>
   <script src="component/app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 </body> 
 
 
