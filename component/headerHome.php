@@ -34,7 +34,7 @@
               <span class="mx-2">Your Card</span>
               <div class="shopping flex">
                 <img src="component/image/shopping.svg">
-                <span class="quantity">0</span>
+                <span class="quantity"><?php echo $row['count'] ?></span>
               </div>
             </a>
 

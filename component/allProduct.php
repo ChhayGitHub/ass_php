@@ -7,17 +7,34 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="component/style.css">
 </head>
+<?php
+$con = new mysqli("localhost", "root", "", "it113");
+$sql = "select * from tbproducts";
+$result = $con->query($sql);
 
+//
+$sell = "select * from tbtmpsell";
+$resultsell = $con->query($sell);
+//
+$count = "SELECT COUNT(name) as count FROM tbtmpsell";
+$resultcount = $con->query($count);
+$row = $resultcount->fetch_assoc();
+//
+$sum = "SELECT SUM(price) as total FROM tbtmpsell";
+$resultsum = $con->query($sum);
+$rowsum = $resultsum->fetch_assoc();
+// print_r($rowsum);
+
+// exit();
+?>
+
+
+
+<?php 
+include($_SERVER['DOCUMENT_ROOT'].'/ass_php/component/headerHome.php');
+?>
 <body class="active">
-
     <div class="container">
-        <header>
-            <h1>Your Shopping Cart</h1>
-            <div class="shopping">
-                <img src="image/shopping.svg">
-                <span class="quantity"><?php echo $row['count'] ?></span>
-            </div>
-        </header>
 
         <div class="list">
             <?php
@@ -112,10 +129,10 @@
             document.querySelector(".total").innerHTML = total;
         }
     </script>
-</body> 
- <script src="https://cdn.tailwindcss.com"></script>
+     <!-- <script src="https://cdn.tailwindcss.com"></script>
   <script src="component/app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script> -->
+</body> 
 
 
 </html>
