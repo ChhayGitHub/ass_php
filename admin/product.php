@@ -41,10 +41,9 @@ $data = mysqli_fetch_assoc($result);
             <h1 class="text-2xl font-semibold text-gray-900">Product</h1>
         </div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <!-- <div class="py-4">
-                <div class="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>
-            </div> -->
+            <div class="w-full text-right">
+                <a href="product/create.php" class="border py-2 px-3 rounded-md mr-5 bg-green-500 hover:bg-green-600 text-white">Add New Product</a>
+            </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg border m-5">
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -66,23 +65,17 @@ $data = mysqli_fetch_assoc($result);
                     <tbody>
 
                         <?php
-
-                        print_r($data);
-                        foreach ($data as $item) {
-
-
-
-
+                        while ($row = $result->fetch_assoc()) {
                             echo '<tr class="bg-white border">';
                             echo '<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                               ' . $item['proName'] . '
+                               ' . $row['proName'] . '
                             </th>';
                             echo '<td class="px-6 py-4">
-                            ' . $item->price . '
+                            ' . $row['price'] . '
                         </td>';
 
                             echo '                        <td class="px-6 py-4">
-                            ' . $item['price'] . '
+                            ' .  $row['price'] . '
                         </td>';
 
                             echo '<td class="px-6 py-4 flex gap-5 item-center ">
@@ -93,6 +86,7 @@ $data = mysqli_fetch_assoc($result);
                             echo '</tr>';
                         }
                         ?>
+
 
                     </tbody>
                 </table>
