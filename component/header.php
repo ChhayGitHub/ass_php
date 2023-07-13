@@ -1,8 +1,8 @@
     <?php
 
-    $session = $_SESSION['user'];
+    // $session = $_SESSION['user'];    
 
-    $username = strtoupper($session['username']);
+    // $username = strtoupper($session['username']);
 
     if (isset($_POST['btnLogout'])) {
         session_destroy();
