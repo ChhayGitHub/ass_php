@@ -10,7 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 </head>
 <?php
-$con = new mysqli("localhost", "root", "123", "it113");
+$con = new mysqli("localhost", "root", "", "it113");
+// $con = new mysqli("localhost", "root", "123", "it113");
 $sql = "select * from tbproducts";
 $result = $con->query($sql);
 
@@ -56,17 +57,25 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
     </div>
     <div class="card">
         <h1>Card</h1>
-        <ul class="listCard ">
+        <ul class="listCard overscroll">
             <?php
             while ($row = $resultsell->fetch_assoc()) {
                 echo "<li>
                 <div><img src='component/image/$row[image]' /></div>
-                <div>$row[name]</div>
+                <div>$row[proName]</div>
                 <div class='listprice'>$row[price]</div>
-                <div>
-                    <button onclick='discrement(this)'>-</button>
+                <div >
+                    <button onclick='discrement(this)' class='flex justify-center items-center rounded-lg'>
+                        <div class='bg-red-500 rounded-lg px-2 text-white active:scale-95 '>
+                            -
+                        </div>
+                    </button>
                     <div class='count'>1</div>
-                    <button onclick='Increment(this)'>+</button>
+                    <button onclick='Increment(this)' class='rounded-lg'>
+                        <div class='bg-blue-500 rounded-lg px-2 text-white active:scale-95'>
+                        +
+                        </div>
+                    </button>
                     <div style ='display:none'>$row[price]</div>
                 </div>
             </li>";
@@ -74,10 +83,10 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
 
 
             ?>
-
+            <div class="total text-white text-2xl font-semibold"> Total: <?php echo $rowsum["total"] ?></div>
         </ul>
         <div class="checkOut">
-            <div class="total"><?php echo $rowsum["total"] ?></div>
+            <div class="text-white">Buy now</div>
             <div class="closeShopping">Close</div>
         </div>
     </div>
