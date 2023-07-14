@@ -10,8 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 </head>
 <?php
-$con = new mysqli("localhost", "root", "", "it113");
-// $con = new mysqli("localhost", "root", "123", "it113");
+include("./component/connection.php");
 $sql = "select * from tbproducts";
 $result = $con->query($sql);
 
@@ -101,6 +100,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
             if (a == "active") {
                 body.classList.remove('active');
                 a = ""
+                window.location.replace("home.php")
             } else {
                 body.classList.add('active');
                 a = "active";
@@ -109,6 +109,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
         })
         closeShopping.addEventListener('click', () => {
             body.classList.remove('active');
+            window.location.replace("home.php")
         })
 
         function discrement(e) {

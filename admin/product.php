@@ -17,13 +17,14 @@ if (isset($_POST['btnLogout'])) {
 
 <?php
 
-$con = new mysqli("localhost", "root", "", "it113");
-// $con = new mysqli("localhost", "root", "123", "it113");
+include("../component/connection.php");
+
 $sql = "select * from tbproducts";
 $result = $con->query($sql);
 
 
 $data = mysqli_fetch_assoc($result);
+
 ?>
 
 <html lang="en" class="h-full">
