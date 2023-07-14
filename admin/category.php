@@ -14,6 +14,16 @@ if (isset($_POST['btnLogout'])) {
 }
 ?>
 
+<?php
+
+include("../component/connection.php");
+
+$sql = "select * from category";
+
+$result = $con->query($sql);
+
+?>
+
 
 
 <html lang="en" class="h-full">
@@ -51,20 +61,31 @@ if (isset($_POST['btnLogout'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                Drink
-                            </th>
-                            <td class="px-6 py-4">
-                                Category Drink
-                            </td>
+                        <?php
+                        while ($data = $result->fetch_assoc()) {
 
-                            <td class="px-6 py-4 flex gap-5 item-center ">
-                                <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-                                <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
-                            </td>
-                        </tr>
+                        ?>
+                            <tr class="bg-white border">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    <?= $data['name'] ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?= $data['description'] ?>
+                                </td>
 
+                                <td class="px-6 py-4 flex gap-5 item-center ">
+                                    <form action="./category/edit.php" method="post">
+                                        <input style="display: none;" type="text" name="id" value="<?= $data['id'] ?>">
+                                        <button name="btnEdit" class="font-medium text-blue-600 hover:underline" type="submit">Edit</button>
+                                    </form>
+                                    <form action="./category/delete.php" method="post">
+                                        <input style="display: none;" type="text" name="id" value="<?= $data['id'] ?>">
+                                        <button name="btnDelete" class="font-medium text-red-600 hover:underline" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

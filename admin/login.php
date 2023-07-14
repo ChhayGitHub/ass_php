@@ -10,16 +10,24 @@ if ($result_session == true) {
 }
 
 if (isset($_POST['btnLogin'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    include("../component/connection.php");
+    extract($_POST);
 
-    $_SESSION['user'] = array(
-        'username' => $username,
-        'password' => $password,
-        'role' => 'admin'
-    );
+    $sql = "select * from user where name = '$username' and password = '$password'";
 
-    header("Location: dashboard.php");
+    $result = $con->query($sql);
+
+    if ($result) {
+        while ($data = $result->fetch_assoc()) {
+            $_SESSION['user'] = array(
+                'username' => $data['name'],
+                'password' => $data['password'],
+                'role' => 'admin'
+            );
+
+            header("Location: dashboard.php");
+        }
+    }
 }
 
 ?>
