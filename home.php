@@ -47,8 +47,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
                 <img src='component/image/$row[image]'>
                 <div class='title'>$row[proName]</div>
                 <div class='price'>$row[price]</div>
-                <button><a href='tmpsell.php?img=$row[image]&name=$row[proName]&price=$row[price]'>Add To Card</a> </button>
-                
+                <button><a href='./function/fnAddToCard.php?img=$row[image]&name=$row[proName]&price=$row[price]'>Add To Card</a> </button>
             </div>";
             }
             ?>
@@ -83,7 +82,10 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
 
 
             ?>
-            <div class="total text-white text-2xl font-semibold"> Total: <?php echo $rowsum["total"] ?></div>
+            <span class="flex gap-2 text-white text-2xl font-semibold">Total:
+
+                <div class="total ">  <?php echo $rowsum["total"] ?></div>
+            </span>
         </ul>
         <div class="checkOut">
             <div class="text-white">Buy now</div>
