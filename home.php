@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <html lang="en">
 
 <head>
@@ -8,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </head>
 <?php
 include("./component/connection.php");
@@ -57,33 +61,41 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
         <h1>Card</h1>
         <ul class="listCard overscroll">
             <?php
+            $count = 1;
+            $_SESSION['qty'] = $count;
             while ($row = $resultsell->fetch_assoc()) {
-                echo "<li>
+                echo "<li id='items'>
                 <div><img src='component/image/$row[image]' /></div>
                 <div>$row[proName]</div>
                 <div class='listprice'>$row[price]</div>
                 <div >
-                    <button onclick='discrement(this)' class='flex justify-center items-center rounded-lg'>
+                    <button onclick='discrement(this)'
+                    id='discrement'
+                     class='flex justify-center items-center rounded-lg'>
                         <div class='bg-red-500 rounded-lg px-2 text-white active:scale-95 '>
                             -
                         </div>
                     </button>
-                    <div class='count'>1</div>
-                    <button onclick='Increment(this)' class='rounded-lg'>
+                    <div class='count' id='count'></div>
+                    <button onclick='Increment(this)' class='rounded-lg ' id='increment'>
+                        <input type='hidden' name='decrement' value='$row[proId]'>
                         <div class='bg-blue-500 rounded-lg px-2 text-white active:scale-95'>
                         +
                         </div>
                     </button>
                     <div style ='display:none'>$row[price]</div>
+                    <svg xmlns='http://www.w3.org/2000/svg' class=' delete text-red-500 ml-2 cursor-pointer'
+                    width='32' height='32' viewBox='0 0 24 24'>
+                    <path fill='currentColor' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z'/></svg>
                 </div>
             </li>";
             }
 
 
             ?>
-            <span class="flex gap-2 text-white text-2xl font-semibold">Total:
+            <span class="flex gap-2 text-white text-2xl font-semibold pt-5 justify-end pr-5">Total:
 
-                <div class="total ">  <?php echo $rowsum["total"] ?></div>
+                <div class="total "> <?php echo $rowsum["total"] ?></div>
             </span>
         </ul>
         <div class="checkOut">
@@ -93,11 +105,14 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
     </div>
 
     <script>
+        // document.getElementById("count").innerHTML = localStorage.clickcount;
         let openShopping = document.querySelector('.shopping');
         let closeShopping = document.querySelector('.closeShopping');
         let body = document.querySelector('body');
 
-        let a = ""
+        let a = "";
+        // let items = document.querySelector('#items');
+        // items.children[3].children[1] = localStorage.clickcount;
         openShopping.addEventListener('click', () => {
             if (a == "active") {
                 body.classList.remove('active');
@@ -117,23 +132,36 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
         function discrement(e) {
             let count = e.parentElement.children[1].innerHTML
             let price = e.parentElement.children[3].innerHTML
-            if (parseInt(count) > 1) {
-                e.parentElement.children[1].innerHTML = parseInt(count) - 1;
-                e.parentElement.parentElement.children[2].innerHTML = parseInt(price) * (parseInt(count) - 1);
-            }
+            // if (localStorage.clickcount) {
+            //     localStorage.clickcount = Number(localStorage.clickcount) - 1;
+            // } else {
+            //     localStorage.clickcount = 1;
+            // }
+            // count = localStorage.clickcount;
+
+            e.parentElement.children[1].innerHTML = parseInt(count) - 1;
+
+            e.parentElement.parentElement.children[2].innerHTML = parseInt(price) * (parseInt(count) + 1);
             Total();
+            // e.parentElement.children[1].innerHTML = localStorage.clickcount;
         }
 
         function Increment(e) {
             let count = e.parentElement.children[1].innerHTML
             let price = e.parentElement.children[3].innerHTML
+            // if (localStorage.Total) {
+            //     localStorage.clickcount = Number(localStorage.clickcount) + 1;
+            // } else {
+            //     localStorage.clickcount = 1;
+            // }
+            // count = localStorage.clickcount;
 
 
             e.parentElement.children[1].innerHTML = parseInt(count) + 1;
 
             e.parentElement.parentElement.children[2].innerHTML = parseInt(price) * (parseInt(count) + 1);
-
             Total();
+            // e.parentElement.children[1].innerHTML = localStorage.clickcount;
         }
 
         function Total() {
@@ -142,7 +170,6 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
             for (let i = 0; i < item.length; i++) {
                 total += parseInt(item[i].innerHTML)
             }
-
             document.querySelector(".total").innerHTML = total;
         }
     </script>
