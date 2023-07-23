@@ -61,8 +61,6 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
         <h1>Card</h1>
         <ul id="listCard" class="listCard overscroll">
             <?php
-            $count = 1;
-            $_SESSION['qty'] = $count;
             while ($row = $resultsell->fetch_assoc()) {
                 echo "<li id='items'>
                 <div><img src='component/image/$row[image]' /></div>
@@ -76,7 +74,9 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
                             -
                         </div>
                     </button>
-                    <div class='count' id='count'></div>
+                    <div class='count' id='count'>
+                        1
+                    </div>
                     <button onclick='Increment(this)' class='rounded-lg ' id='increment'>
                         <input type='hidden' name='decrement' value='$row[proId]'>
                         <div class='bg-blue-500 rounded-lg px-2 text-white active:scale-95'>
@@ -129,8 +129,14 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
 
         function discrement(e) {
             let count = e.parentElement.children[1].innerHTML
+            let total = e.parentElement.children[2].innerHTML
             let price = e.parentElement.children[3].innerHTML
 
+            localStorage.setItem('count', parseInt(count));
+            localStorage.setItem('price', parseInt(price));
+            e.parentElement.children[1].innerHTML = parseInt(JSON.parse(localStorage.getItem('count'))) - 1;
+            localStorage.setItem('total', (parseInt(JSON.parse(localStorage.getItem('count'))) - 1) * parseInt(JSON.parse(localStorage.getItem('price'))));
+            e.parentElement.parentElement.children[2].innerHTML = localStorage.getItem('total');
             Total();
         }
 
@@ -139,6 +145,12 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
             let count = e.parentElement.children[1].innerHTML
             let price = e.parentElement.children[3].innerHTML
 
+
+            localStorage.setItem('count', parseInt(count));
+            localStorage.setItem('price', parseInt(price));
+            e.parentElement.children[1].innerHTML = parseInt(JSON.parse(localStorage.getItem('count'))) + 1;
+            localStorage.setItem('total', (parseInt(JSON.parse(localStorage.getItem('count'))) + 1) * parseInt(JSON.parse(localStorage.getItem('price'))))
+            e.parentElement.parentElement.children[2].innerHTML = localStorage.getItem('total');
             Total();
         }
 
@@ -146,7 +158,9 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
             let total = 0;
             let item = document.querySelectorAll(".listprice");
             for (let i = 0; i < item.length; i++) {
-                total += parseInt(item[i].innerHTML)
+                // total += parseInt(item[i].innerHTML)
+                localStorage.setItem('total', parseInt(item[i].innerHTML));
+                total += parseInt(localStorage.getItem('total'));
             }
             document.querySelector(".total").innerHTML = total;
         }

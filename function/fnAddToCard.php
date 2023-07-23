@@ -1,30 +1,27 @@
 <?php
-// include("../component/connection.php");
+include("../component/connection.php");
 
-// $proName = $_GET['name'];
-// $sqlTempSell = "SELECT * FROM tbtempsell";
-// $result = $con->query($sqlTempSell);
-// if (mysqli_num_rows($result) > 0) {
+$proName = $_GET['name'];
+$sqlTempSell = "SELECT * FROM tbtempsell";
+$result = $con->query($sqlTempSell);
+if (mysqli_num_rows($result) > 0) {
 
-//     $sql = "select * from tbtempsell where proName like '%$proName%'";
+    $sql = "select * from tbtempsell where proName like '%$proName%'";
 
-//     $result = $con->query($sql);
+    $result = $con->query($sql);
 
-//     $data = $result->fetch_assoc();
+    $data = $result->fetch_assoc();
 
-//     if (!$data) {
+    if (!$data) {
 
-//         $sql = "INSERT INTO tbtempsell(image,proName,price) VALUES ('$_GET[img]','$_GET[name]','$_GET[price]')";
-//         $result = $con->query($sql);
-
-//     }
-// } else {
-//     $sql = "INSERT INTO tbtempsell(image,proName,price) VALUES ('$_GET[img]','$_GET[name]','$_GET[price]')";
-//     $con->query($sql);
-// }
-// header("Location: ../home.php");
-
-extract($_GET);
+        $sql = "INSERT INTO tbtempsell(image,proName,price) VALUES ('$_GET[img]','$_GET[name]','$_GET[price]')";
+        $result = $con->query($sql);
+    }
+} else {
+    $sql = "INSERT INTO tbtempsell(image,proName,price) VALUES ('$_GET[img]','$_GET[name]','$_GET[price]')";
+    $con->query($sql);
+}
+header("Location: ../home.php");
 
 ?>
 
@@ -57,5 +54,6 @@ extract($_GET);
 
     console.log(localStorage.getItem("items"))
 
-    <?php header("Location: ../home.php") ?>
+    // console.log(localStorage.getItem("items"));
+    // // <?php header("../home.php") ?>
 </script>
