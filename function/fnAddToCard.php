@@ -29,30 +29,33 @@ extract($_GET);
 ?>
 
 <script>
+    let localItem = localStorage.getItem("items")
 
-    // let items = JSON.parse(localStorage.getItem('items')) 
+    let items;
 
-    // console.log(items);
+    if (localItem) {
+        items = JSON.parse(localItem)
+    } else {
+        items = []
+    }
 
-    // let item = {
-    //     image: '<?= $img;?>',
-    //     proName: '<?= $name;?>',
-    //     price: '<?= $price;?>'
-    // }
+    let item = {
+        name: '<?= $name; ?>',
+        image: '<?= $img; ?>',
+        price: '<?= $price; ?>'
+    }
 
-    // for (let i = 0; i < items.length; i++) {
-    //     if(items[i].name.includes(item.name)) {
-    //         console.log("have")
-    //     }else{
-    //         console.log("Not Have")
-    //     }
-    // }
+    items.forEach(i => {
+        if (i.name.includes(item.name)) {} else {
+            items.push(item)
 
+            let itemsString = JSON.parse(items)
 
-    // items.push(item);
+            localStorage.setItem("items", itemsString)
+        }
+    });
 
-    // localStorage.setItem("items", JSON.stringify(items));
+    console.log(localStorage.getItem("items"))
 
-    // console.log(localStorage.getItem("items"));
-    // // <?php header("../home.php") ?>
+    <?php header("Location: ../home.php") ?>
 </script>

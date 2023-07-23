@@ -51,7 +51,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
                 <div class='title'>$row[proName]</div>
                 <div class='price'>$row[price]</div>
                 <button><a href='./function/fnAddToCard.php?img=$row[image]&name=$row[proName]&price=$row[price]'>Add To Card</a> </button>
-            </div>";
+                </div>";
             }
             ?>
 
@@ -59,7 +59,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
     </div>
     <div class="card">
         <h1>Card</h1>
-        <ul class="listCard overscroll">
+        <ul id="listCard" class="listCard overscroll">
             <?php
             $count = 1;
             $_SESSION['qty'] = $count;
@@ -105,14 +105,12 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
     </div>
 
     <script>
-        // document.getElementById("count").innerHTML = localStorage.clickcount;
         let openShopping = document.querySelector('.shopping');
         let closeShopping = document.querySelector('.closeShopping');
         let body = document.querySelector('body');
+        let items;
 
         let a = "";
-        // let items = document.querySelector('#items');
-        // items.children[3].children[1] = localStorage.clickcount;
         openShopping.addEventListener('click', () => {
             if (a == "active") {
                 body.classList.remove('active');
@@ -132,36 +130,16 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
         function discrement(e) {
             let count = e.parentElement.children[1].innerHTML
             let price = e.parentElement.children[3].innerHTML
-            // if (localStorage.clickcount) {
-            //     localStorage.clickcount = Number(localStorage.clickcount) - 1;
-            // } else {
-            //     localStorage.clickcount = 1;
-            // }
-            // count = localStorage.clickcount;
 
-            e.parentElement.children[1].innerHTML = parseInt(count) - 1;
-
-            e.parentElement.parentElement.children[2].innerHTML = parseInt(price) * (parseInt(count) + 1);
             Total();
-            // e.parentElement.children[1].innerHTML = localStorage.clickcount;
         }
 
         function Increment(e) {
+
             let count = e.parentElement.children[1].innerHTML
             let price = e.parentElement.children[3].innerHTML
-            // if (localStorage.Total) {
-            //     localStorage.clickcount = Number(localStorage.clickcount) + 1;
-            // } else {
-            //     localStorage.clickcount = 1;
-            // }
-            // count = localStorage.clickcount;
 
-
-            e.parentElement.children[1].innerHTML = parseInt(count) + 1;
-
-            e.parentElement.parentElement.children[2].innerHTML = parseInt(price) * (parseInt(count) + 1);
             Total();
-            // e.parentElement.children[1].innerHTML = localStorage.clickcount;
         }
 
         function Total() {
@@ -172,6 +150,51 @@ include($_SERVER['DOCUMENT_ROOT'] . '/ass_php/component/headerHome.php');
             }
             document.querySelector(".total").innerHTML = total;
         }
+
+        function getItem() {
+            let classListCart = document.getElementById("listCard")
+
+            let localItem = localStorage.getItem("items")
+
+            console.log(localItem)
+
+            if (localItem) {
+                items = JSON.parse(localItem)
+
+                items.forEach(i => {
+                    classListCart.innerHTML += `<li id='items'>
+                <div><img src='component/image/${i.image}' /></div>
+                <div>$row[proName]</div>
+                <div class='listprice'>${i.price}</div>
+                <div >
+                    <button onclick='discrement(this)'
+                    id='discrement'
+                     class='flex justify-center items-center rounded-lg'>
+                        <div class='bg-red-500 rounded-lg px-2 text-white active:scale-95 '>
+                            -
+                        </div>
+                    </button>
+                    <div class='count' id='count'></div>
+                    <button onclick='Increment(this)' class='rounded-lg ' id='increment'>
+                        <input type='hidden' name='decrement' value='${i.price}'>
+                        <div class='bg-blue-500 rounded-lg px-2 text-white active:scale-95'>
+                        +
+                        </div>
+                    </button>
+                    <div style ='display:none'>${i.price}</div>
+                    <svg xmlns='http://www.w3.org/2000/svg' class=' delete text-red-500 ml-2 cursor-pointer'
+                    width='32' height='32' viewBox='0 0 24 24'>
+                    <path fill='currentColor' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z'/></svg>
+                </div>
+            </li>`
+                });
+
+            } else {
+                classListCart.innerHTML = "<div class='text-white text-center'> No Item on Your Cart</div>"
+            }
+        }
+
+        getItem()
     </script>
 
 </body>
